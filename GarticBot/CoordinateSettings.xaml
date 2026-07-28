@@ -1,4 +1,4 @@
-﻿<Window x:Class="GarticBot.CoordinateSettings"
+<Window x:Class="GarticBot.CoordinateSettings"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:GarticBot"
         mc:Ignorable="d"
         KeyDown="Window_KeyDown"
-        Title="CoordinateSettings" Height="450" Width="767" WindowStartupLocation="CenterScreen" MinWidth="780" MinHeight="140">
+        Title="Настройка Координат" Height="500" Width="780" WindowStartupLocation="CenterScreen" MinWidth="780" MinHeight="500">
     <Window.Resources>
         <Style x:Key="FocusVisual">
             <Setter Property="Control.Template">
@@ -26,6 +26,7 @@
         <SolidColorBrush x:Key="Button.Disabled.Background" Color="#FFF4F4F4"/>
         <SolidColorBrush x:Key="Button.Disabled.Border" Color="#FFADB2B5"/>
         <SolidColorBrush x:Key="Button.Disabled.Foreground" Color="#FF838383"/>
+        
         <Style x:Key="RoundeButton" TargetType="{x:Type Button}">
             <Setter Property="FocusVisualStyle" Value="{StaticResource FocusVisual}"/>
             <Setter Property="Background" Value="{StaticResource Button.Static.Background}"/>
@@ -38,20 +39,20 @@
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type Button}">
-                        <Border CornerRadius="5" x:Name="border" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="2" SnapsToDevicePixels="true">
-                            <ContentPresenter x:Name="contentPresenter" Focusable="False" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" Margin="1,1,1,1" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                        <Border CornerRadius="6" x:Name="border" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="1.5" SnapsToDevicePixels="true">
+                            <ContentPresenter x:Name="contentPresenter" Focusable="False" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" Margin="1" VerticalAlignment="Center" HorizontalAlignment="Center" />
                         </Border>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsDefaulted" Value="true">
                                 <Setter Property="BorderBrush" TargetName="border" Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}"/>
                             </Trigger>
                             <Trigger Property="IsMouseOver" Value="true">
-                                <Setter Property="Background" TargetName="border" Value="{StaticResource Button.MouseOver.Background}"/>
-                                <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource Button.MouseOver.Border}"/>
+                                <Setter Property="Background" TargetName="border" Value="#FFE6F2FF"/>
+                                <Setter Property="BorderBrush" TargetName="border" Value="#FF4A90E2"/>
                             </Trigger>
                             <Trigger Property="IsPressed" Value="true">
-                                <Setter Property="Background" TargetName="border" Value="{StaticResource Button.Pressed.Background}"/>
-                                <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource Button.Pressed.Border}"/>
+                                <Setter Property="Background" TargetName="border" Value="#FFCCE5FF"/>
+                                <Setter Property="BorderBrush" TargetName="border" Value="#FF1E64B4"/>
                             </Trigger>
                             <Trigger Property="IsEnabled" Value="false">
                                 <Setter Property="Background" TargetName="border" Value="{StaticResource Button.Disabled.Background}"/>
@@ -63,43 +64,99 @@
                 </Setter.Value>
             </Setter>
         </Style>
+
+        <Style x:Key="CircleButton" TargetType="{x:Type Button}">
+            <Setter Property="FocusVisualStyle" Value="{StaticResource FocusVisual}"/>
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="BorderBrush" Value="#FF707070"/>
+            <Setter Property="Foreground" Value="#FF333333"/>
+            <Setter Property="BorderThickness" Value="1.5"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Padding" Value="0"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border CornerRadius="12" x:Name="border" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" SnapsToDevicePixels="true">
+                            <ContentPresenter x:Name="contentPresenter" Focusable="False" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="true">
+                                <Setter Property="Background" TargetName="border" Value="#FFDCECFC"/>
+                                <Setter Property="BorderBrush" TargetName="border" Value="#FF3C7FB1"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="true">
+                                <Setter Property="Background" TargetName="border" Value="#FFC4E5F6"/>
+                                <Setter Property="BorderBrush" TargetName="border" Value="#FF2C628B"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
     </Window.Resources>
     <Grid>
         <Grid.Background>
             <ImageBrush ImageSource="/Assets/background.png" Stretch="UniformToFill"/>
         </Grid.Background>
-        <Border Height="100" VerticalAlignment="Top" CornerRadius="0,0,15,15" Background="#FFF0F0F0">
+        
+        <!-- Top control panel with semi-transparent background, border and soft shadow -->
+        <Border Height="110" VerticalAlignment="Top" CornerRadius="0,0,15,15" Background="#F4F8FAFF" BorderBrush="#FFD0D5DD" BorderThickness="0,0,0,1.5">
+            <Border.Effect>
+                <DropShadowEffect BlurRadius="12" Color="Black" Opacity="0.2" Direction="270" ShadowDepth="3"/>
+            </Border.Effect>
             <Grid>
-                <Button x:Name="setOpenPalette" Style="{DynamicResource RoundeButton}" Content="Х" HorizontalAlignment="Left" Margin="9,22,0,0" VerticalAlignment="Top" Height="24" Width="23" FontFamily="Myriad Pro" FontSize="16" BorderBrush="Gray" Foreground="#FF333333" Background="White" Click="SetCoordButton_Click"/>
-                <TextBlock HorizontalAlignment="Left" Margin="10,5,0,0" TextWrapping="Wrap" Text="открыть палитру" VerticalAlignment="Top" Width="143" FontFamily="Myriad Pro" FontWeight="Bold" FontSize="15"/>
-                <TextBox x:Name="openPaletteX" PreviewTextInput="NumberValidationTextBox" HorizontalAlignment="Left" Margin="34,22,0,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="68" Height="24" FontFamily="Myriad Pro" FontSize="18" Style="{DynamicResource RoundedTextBox}" BorderBrush="Gray"/>
-                <TextBlock HorizontalAlignment="Left" Margin="10,51,0,0" TextWrapping="Wrap" Text="пустое место" VerticalAlignment="Top" Width="119" FontFamily="Myriad Pro" FontWeight="Bold" FontSize="15"/>
-                <TextBlock HorizontalAlignment="Left" Margin="198,5,0,0" TextWrapping="Wrap" Text="красный" VerticalAlignment="Top" Width="118" FontFamily="Myriad Pro" FontWeight="Bold" FontSize="15"/>
-                <TextBlock HorizontalAlignment="Left" Margin="198,51,0,0" TextWrapping="Wrap" Text="зелёный" VerticalAlignment="Top" Width="118" FontFamily="Myriad Pro" FontWeight="Bold" FontSize="15"/>
-                <TextBlock HorizontalAlignment="Left" Margin="385,5,0,0" TextWrapping="Wrap" Text="синий" VerticalAlignment="Top" Width="118" FontFamily="Myriad Pro" FontWeight="Bold" FontSize="15"/>
-                <Button Content="вставить фото" HorizontalAlignment="Left" Margin="385,51,0,0" VerticalAlignment="Top" Height="42" Width="164" FontFamily="Myriad Pro" TextBlock.FontFamily="Myriad Pro" TextBlock.FontWeight="Bold" TextBlock.FontSize="16" Style="{DynamicResource RoundeButton}" BorderBrush="Gray" Foreground="#FF333333" Background="White" FontSize="20" Click="PasteImageButton_Click"/>
-                <Button Content="сохранить" HorizontalAlignment="Left" Margin="554,52,0,0" VerticalAlignment="Top" Height="40" Width="203" FontFamily="Myriad Pro" TextBlock.FontFamily="Myriad Pro" TextBlock.FontWeight="Bold" TextBlock.FontSize="16" Style="{DynamicResource RoundeButton}" BorderBrush="Gray" Foreground="#FF333333" Background="White" FontSize="20" Click="SaveButton_Click"/>
-                <TextBox x:Name="openPaletteY" PreviewTextInput="NumberValidationTextBox" HorizontalAlignment="Left" Margin="107,22,0,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="68" Height="24" FontFamily="Myriad Pro" FontSize="18" Style="{DynamicResource RoundedTextBox}" BorderBrush="Gray"/>
-                <Button x:Name="setEmpty" Style="{DynamicResource RoundeButton}" Content="Х" HorizontalAlignment="Left" Margin="9,69,0,0" VerticalAlignment="Top" Height="24" Width="23" FontFamily="Myriad Pro" FontSize="16" BorderBrush="Gray" Foreground="#FF333333" Background="White" Click="SetCoordButton_Click"/>
-                <TextBox x:Name="emptySpaceX" PreviewTextInput="NumberValidationTextBox" HorizontalAlignment="Left" Margin="34,69,0,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="68" Height="24" FontFamily="Myriad Pro" FontSize="18" Style="{DynamicResource RoundedTextBox}" BorderBrush="Gray"/>
-                <TextBox x:Name="emptySpaceY" PreviewTextInput="NumberValidationTextBox" HorizontalAlignment="Left" Margin="107,69,0,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="68" Height="24" FontFamily="Myriad Pro" FontSize="18" Style="{DynamicResource RoundedTextBox}" BorderBrush="Gray"/>
-                <Button x:Name="setRed" Style="{DynamicResource RoundeButton}" Content="Х" HorizontalAlignment="Left" Margin="196,22,0,0" VerticalAlignment="Top" Height="24" Width="23" FontFamily="Myriad Pro" FontSize="16" BorderBrush="Gray" Foreground="#FF333333" Background="White" Click="SetCoordButton_Click"/>
-                <TextBox x:Name="redX" PreviewTextInput="NumberValidationTextBox" HorizontalAlignment="Left" Margin="221,22,0,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="68" Height="24" FontFamily="Myriad Pro" FontSize="18" Style="{DynamicResource RoundedTextBox}" BorderBrush="Gray"/>
-                <TextBox x:Name="redY" PreviewTextInput="NumberValidationTextBox" HorizontalAlignment="Left" Margin="294,22,0,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="68" Height="24" FontFamily="Myriad Pro" FontSize="18" Style="{DynamicResource RoundedTextBox}" BorderBrush="Gray"/>
-                <Button x:Name="setGreen" Style="{DynamicResource RoundeButton}" Content="Х" HorizontalAlignment="Left" Margin="196,69,0,0" VerticalAlignment="Top" Height="24" Width="23" FontFamily="Myriad Pro" FontSize="16" BorderBrush="Gray" Foreground="#FF333333" Background="White" Click="SetCoordButton_Click"/>
-                <TextBox x:Name="greenX" PreviewTextInput="NumberValidationTextBox" HorizontalAlignment="Left" Margin="221,69,0,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="68" Height="24" FontFamily="Myriad Pro" FontSize="18" Style="{DynamicResource RoundedTextBox}" BorderBrush="Gray"/>
-                <TextBox x:Name="greenY" PreviewTextInput="NumberValidationTextBox" HorizontalAlignment="Left" Margin="294,69,0,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="68" Height="24" FontFamily="Myriad Pro" FontSize="18" Style="{DynamicResource RoundedTextBox}" BorderBrush="Gray"/>
-                <Button x:Name="setBlue" Style="{DynamicResource RoundeButton}" Content="Х" HorizontalAlignment="Left" Margin="385,22,0,0" VerticalAlignment="Top" Height="24" Width="23" FontFamily="Myriad Pro" FontSize="16" BorderBrush="Gray" Foreground="#FF333333" Background="White" Click="SetCoordButton_Click"/>
-                <TextBox x:Name="blueX" PreviewTextInput="NumberValidationTextBox" HorizontalAlignment="Left" Margin="411,22,0,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="68" Height="24" FontFamily="Myriad Pro" FontSize="18" Style="{DynamicResource RoundedTextBox}" BorderBrush="Gray"/>
-                <TextBox x:Name="blueY" PreviewTextInput="NumberValidationTextBox" HorizontalAlignment="Left" Margin="481,22,0,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="68" Height="24" FontFamily="Myriad Pro" FontSize="18" Style="{DynamicResource RoundedTextBox}" BorderBrush="Gray"/>
-                <TextBlock HorizontalAlignment="Left" Margin="554,5,0,0" TextWrapping="Wrap" Text="остановка" VerticalAlignment="Top" Width="98" FontFamily="Myriad Pro" FontWeight="Bold" FontSize="14" TextAlignment="Center"/>
-                <TextBlock HorizontalAlignment="Left" Margin="657,5,0,0" TextWrapping="Wrap" Text="пропуск цвета" VerticalAlignment="Top" Width="100" FontFamily="Myriad Pro" FontWeight="Bold" FontSize="14" TextAlignment="Center"/>
+                <!-- First column: Open Palette & Empty Space -->
+                <TextBlock HorizontalAlignment="Left" Margin="10,6,0,0" TextWrapping="Wrap" Text="открыть палитру" VerticalAlignment="Top" Width="143" FontFamily="Segoe UI" FontWeight="SemiBold" FontSize="13" Foreground="#FF333333"/>
+                <Button x:Name="setOpenPalette" Style="{StaticResource CircleButton}" Content="🎯" ToolTip="Выбрать координаты открытия палитры на экране" HorizontalAlignment="Left" Margin="10,26,0,0" VerticalAlignment="Top" Height="24" Width="24" Click="SetCoordButton_Click"/>
+                <TextBox x:Name="openPaletteX" PreviewTextInput="NumberValidationTextBox" TextChanged="TextBox_TextChanged" HorizontalAlignment="Left" Margin="38,26,0,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="68" Height="24" FontFamily="Segoe UI" FontSize="13" Style="{DynamicResource RoundedTextBox}" BorderBrush="Gray"/>
+                <TextBox x:Name="openPaletteY" PreviewTextInput="NumberValidationTextBox" TextChanged="TextBox_TextChanged" HorizontalAlignment="Left" Margin="110,26,0,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="68" Height="24" FontFamily="Segoe UI" FontSize="13" Style="{DynamicResource RoundedTextBox}" BorderBrush="Gray"/>
+
+                <TextBlock HorizontalAlignment="Left" Margin="10,57,0,0" TextWrapping="Wrap" Text="пустое место" VerticalAlignment="Top" Width="119" FontFamily="Segoe UI" FontWeight="SemiBold" FontSize="13" Foreground="#FF333333"/>
+                <Button x:Name="setEmpty" Style="{StaticResource CircleButton}" Content="🎯" ToolTip="Выбрать координаты клика по пустому месту" HorizontalAlignment="Left" Margin="10,77,0,0" VerticalAlignment="Top" Height="24" Width="24" Click="SetCoordButton_Click"/>
+                <TextBox x:Name="emptySpaceX" PreviewTextInput="NumberValidationTextBox" TextChanged="TextBox_TextChanged" HorizontalAlignment="Left" Margin="38,77,0,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="68" Height="24" FontFamily="Segoe UI" FontSize="13" Style="{DynamicResource RoundedTextBox}" BorderBrush="Gray"/>
+                <TextBox x:Name="emptySpaceY" PreviewTextInput="NumberValidationTextBox" TextChanged="TextBox_TextChanged" HorizontalAlignment="Left" Margin="110,77,0,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="68" Height="24" FontFamily="Segoe UI" FontSize="13" Style="{DynamicResource RoundedTextBox}" BorderBrush="Gray"/>
+
+                <!-- Second column: Red & Green -->
+                <TextBlock HorizontalAlignment="Left" Margin="200,6,0,0" TextWrapping="Wrap" Text="красный" VerticalAlignment="Top" Width="118" FontFamily="Segoe UI" FontWeight="SemiBold" FontSize="13" Foreground="#FFD32F2F"/>
+                <Button x:Name="setRed" Style="{StaticResource CircleButton}" Content="🎯" ToolTip="Выбрать координаты красного слайдера" HorizontalAlignment="Left" Margin="200,26,0,0" VerticalAlignment="Top" Height="24" Width="24" Click="SetCoordButton_Click"/>
+                <TextBox x:Name="redX" PreviewTextInput="NumberValidationTextBox" TextChanged="TextBox_TextChanged" HorizontalAlignment="Left" Margin="228,26,0,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="68" Height="24" FontFamily="Segoe UI" FontSize="13" Style="{DynamicResource RoundedTextBox}" BorderBrush="Gray"/>
+                <TextBox x:Name="redY" PreviewTextInput="NumberValidationTextBox" TextChanged="TextBox_TextChanged" HorizontalAlignment="Left" Margin="300,26,0,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="68" Height="24" FontFamily="Segoe UI" FontSize="13" Style="{DynamicResource RoundedTextBox}" BorderBrush="Gray"/>
+
+                <TextBlock HorizontalAlignment="Left" Margin="200,57,0,0" TextWrapping="Wrap" Text="зелёный" VerticalAlignment="Top" Width="118" FontFamily="Segoe UI" FontWeight="SemiBold" FontSize="13" Foreground="#FF388E3C"/>
+                <Button x:Name="setGreen" Style="{StaticResource CircleButton}" Content="🎯" ToolTip="Выбрать координаты зелёного слайдера" HorizontalAlignment="Left" Margin="200,77,0,0" VerticalAlignment="Top" Height="24" Width="24" Click="SetCoordButton_Click"/>
+                <TextBox x:Name="greenX" PreviewTextInput="NumberValidationTextBox" TextChanged="TextBox_TextChanged" HorizontalAlignment="Left" Margin="228,77,0,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="68" Height="24" FontFamily="Segoe UI" FontSize="13" Style="{DynamicResource RoundedTextBox}" BorderBrush="Gray"/>
+                <TextBox x:Name="greenY" PreviewTextInput="NumberValidationTextBox" TextChanged="TextBox_TextChanged" HorizontalAlignment="Left" Margin="300,77,0,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="68" Height="24" FontFamily="Segoe UI" FontSize="13" Style="{DynamicResource RoundedTextBox}" BorderBrush="Gray"/>
+
+                <!-- Third column: Blue & Paste Image -->
+                <TextBlock HorizontalAlignment="Left" Margin="390,6,0,0" TextWrapping="Wrap" Text="синий" VerticalAlignment="Top" Width="118" FontFamily="Segoe UI" FontWeight="SemiBold" FontSize="13" Foreground="#FF1976D2"/>
+                <Button x:Name="setBlue" Style="{StaticResource CircleButton}" Content="🎯" ToolTip="Выбрать координаты синего слайдера" HorizontalAlignment="Left" Margin="390,26,0,0" VerticalAlignment="Top" Height="24" Width="24" Click="SetCoordButton_Click"/>
+                <TextBox x:Name="blueX" PreviewTextInput="NumberValidationTextBox" TextChanged="TextBox_TextChanged" HorizontalAlignment="Left" Margin="418,26,0,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="68" Height="24" FontFamily="Segoe UI" FontSize="13" Style="{DynamicResource RoundedTextBox}" BorderBrush="Gray"/>
+                <TextBox x:Name="blueY" PreviewTextInput="NumberValidationTextBox" TextChanged="TextBox_TextChanged" HorizontalAlignment="Left" Margin="490,26,0,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="68" Height="24" FontFamily="Segoe UI" FontSize="13" Style="{DynamicResource RoundedTextBox}" BorderBrush="Gray"/>
+
+                <Button Content="📷 вставить фото" HorizontalAlignment="Left" Margin="390,62,0,0" VerticalAlignment="Top" Height="40" Width="168" FontFamily="Segoe UI" FontWeight="Bold" FontSize="14" Style="{DynamicResource RoundeButton}" BorderBrush="Gray" Foreground="#FF333333" Background="White" Click="PasteImageButton_Click" ToolTip="Вставить скриншот экрана из буфера обмена"/>
+
+                <!-- Fourth column: Keys Settings & Save -->
+                <TextBlock HorizontalAlignment="Left" Margin="570,6,0,0" TextWrapping="Wrap" Text="остановка" VerticalAlignment="Top" Width="90" FontFamily="Segoe UI" FontWeight="SemiBold" FontSize="12" Foreground="#FF555555" TextAlignment="Center"/>
+                <TextBlock HorizontalAlignment="Left" Margin="670,6,0,0" TextWrapping="Wrap" Text="пропуск цвета" VerticalAlignment="Top" Width="90" FontFamily="Segoe UI" FontWeight="SemiBold" FontSize="12" Foreground="#FF555555" TextAlignment="Center"/>
                 
-                <Button x:Name="SelectStopButton" Content="Escape" HorizontalAlignment="Left" Margin="554,22,0,0" VerticalAlignment="Top" Height="25" Width="100" FontFamily="Myriad Pro" TextBlock.FontFamily="Myriad Pro" TextBlock.FontWeight="Bold" TextBlock.FontSize="16" Style="{DynamicResource RoundeButton}" BorderBrush="Gray" Foreground="#FF333333" Background="White" FontSize="14" Click="SelectStopButton_Click"/>
-                <Button x:Name="SelectSkipButton" Content="F5" HorizontalAlignment="Left" Margin="657,22,0,0" VerticalAlignment="Top" Height="25" Width="100" FontFamily="Myriad Pro" TextBlock.FontFamily="Myriad Pro" TextBlock.FontWeight="Bold" TextBlock.FontSize="16" Style="{DynamicResource RoundeButton}" BorderBrush="Gray" Foreground="#FF333333" Background="White" FontSize="14" Click="SelectSkipButton_Click"/>
+                <Button x:Name="SelectStopButton" Content="Escape" HorizontalAlignment="Left" Margin="570,26,0,0" VerticalAlignment="Top" Height="26" Width="90" FontFamily="Segoe UI" FontWeight="Bold" FontSize="12" Style="{DynamicResource RoundeButton}" BorderBrush="Gray" Foreground="#FF333333" Background="White" Click="SelectStopButton_Click" ToolTip="Изменить клавишу аварийной остановки рисования"/>
+                <Button x:Name="SelectSkipButton" Content="F5" HorizontalAlignment="Left" Margin="670,26,0,0" VerticalAlignment="Top" Height="26" Width="90" FontFamily="Segoe UI" FontWeight="Bold" FontSize="12" Style="{DynamicResource RoundeButton}" BorderBrush="Gray" Foreground="#FF333333" Background="White" Click="SelectSkipButton_Click" ToolTip="Изменить клавишу пропуска текущего цвета"/>
+
+                <Button Content="💾 сохранить" HorizontalAlignment="Left" Margin="570,62,0,0" VerticalAlignment="Top" Height="40" Width="190" FontFamily="Segoe UI" FontWeight="Bold" FontSize="15" Style="{DynamicResource RoundeButton}" BorderBrush="#FF4A90E2" Foreground="White" Background="#FF4A90E2" Click="SaveButton_Click" ToolTip="Сохранить измененные настройки"/>
             </Grid>
         </Border>
-        <Image Margin="0,100,0,0" x:Name="screenImage" MouseLeftButtonDown="Image_Click"/>
+
+        <!-- Main container for image with transparent hit-test grid -->
+        <Grid Margin="0,110,0,0" Background="Transparent" MouseLeftButtonDown="Image_Click" Cursor="Arrow">
+            <Image x:Name="screenImage" Stretch="Uniform" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
+            
+            <Border HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,10,0,0" Background="#99000000" CornerRadius="8" Padding="12,6">
+                <TextBlock Text="Нажмите на кнопку '🎯' нужного поля, затем кликните по скриншоту, чтобы задать координаты." 
+                           Foreground="White" FontFamily="Segoe UI" FontSize="12.5" FontWeight="Medium" IsHitTestVisible="False" TextAlignment="Center"/>
+            </Border>
+        </Grid>
 
     </Grid>
 </Window>
